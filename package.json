@@ -1,0 +1,20 @@
+{
+  "name": "vite-practice",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^6.3.1"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.1.5",
+    "alpinejs": "^3.14.9",
+    "sortablejs": "^1.15.6",
+    "tailwindcss": "^4.1.5"
+  }
+}
