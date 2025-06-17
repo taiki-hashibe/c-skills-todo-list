@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vite App</title>
+  <script type="module" crossorigin src="/assets/index-BtJpuq-Y.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-E-V8l5_n.css">
+</head>
+
+<body>
+  <div class="flex w-full h-screen items-center justify-center">
+    <!-- TODOリスト -->
+    <div x-data="todoApp()" class="w-96">
+      <!-- インプットグループ -->
+      <div
+        class="flex item-center w-full border border-slate-200 bg-white rounded-md overflow-hidden focus-within:shadow-md">
+        <input x-model="newTodo" type="text" placeholder="やることを入力" class="p-2 grow focus:outline-none">
+        <button @click="addTodo" class="bg-sky-400 px-4 py-2 text-white">
+          追加
+        </button>
+      </div>
+
+      <!-- リスト -->
+      <ul class="mt-4">
+        <template x-for="todo in todoList">
+          <li class="rounded-md shadow-md px-4 py-3 bg-amber-50 mb-2">
+            <span x-text="todo.text"></span>
+            <button @click="removeTodo(todo.id)" class="text-red-500">
+              削除
+            </button>
+          </li>
+        </template>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    function todoApp() {
+      return {
+        newTodo: "",
+        todoList: [],
+        init() {
+          const saved = localStorage.getItem("todoList");
+          this.todoList = saved ? JSON.parse(saved) : [];
+        },
+        save() {
+          localStorage.setItem("todoList", JSON.stringify(this.todoList));
+        },
+        addTodo() {
+          // trimは前後の空白を削除するJavascriptのメソッド
+          // 空白のみの時には追加しないためにtrimを使用
+          if (this.newTodo.trim() !== "") {
+            this.todoList.push({
+              id: Date.now(),
+              text: this.newTodo.trim()
+            });
+            this.newTodo = "";
+            this.save();
+          }
+        },
+        removeTodo(id) {
+          this.todoList = this.todoList.filter(todo => todo.id !== id);
+          this.save();
+        }
+      }
+    }
+  </script>
+
+  <!-- <div class="flex flex-col items-center justify-center h-screen">
+      <ul x-data="{ todoList: [
+        'Todo 1',
+        'Todo 2',
+        'Todo 3'
+      ] }" class="flex flex-col gap-3 w-96">
+          <template x-for="todo in todoList">
+              <li x-text="todo" class="bg-amber-50 px-4 py-3 shadow-md rounded-md">
+              </li>
+          </template>
+      </ul>
+    </div> -->
+</body>
+
+</html>
